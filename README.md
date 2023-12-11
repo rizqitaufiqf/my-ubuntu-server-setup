@@ -9,7 +9,7 @@
     ```
 * Chown setup.sh
     ```bash
-    chown +x setup.sh
+    chmod +x setup.sh
     ```
 * Execute
     ```bash
