@@ -2,19 +2,14 @@
 * Clone this repository
     ```bash
     git clone https://github.com/rizqitaufiqf/my-ubuntu-server-setup.git
-    ```
-* Go to my-ubuntu-server-setup
-    ```bash
     cd my-ubuntu-server-setup.git
-    ```
-* Chown setup.sh
-    ```bash
     chmod +x setup.sh
+    sudo ./setup.sh 
     ```
-* Execute
-    ```bash
-    ./setup.sh 
-    ```
+* Login Tailscale
+  ```bash
+  sudo tailscale up
+  ```
 
 ## Feature
 * Remove unused package

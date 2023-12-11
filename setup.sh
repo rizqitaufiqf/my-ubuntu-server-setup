@@ -9,7 +9,6 @@ sudo apt install unzip -y
 
 prinf "\n install tailscale"
 sudo curl -fsSL https://tailscale.com/install.sh | sh
-sudo tailscale up
 
 printf "\n remove unused package ubuntu"
 sudo chmod +x ubuntu-cleaner.sh
