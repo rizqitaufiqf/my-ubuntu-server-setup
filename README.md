@@ -10,8 +10,13 @@
   ```bash
   sudo tailscale up
   ```
+* Portainer host
+  ```bash
+  http://localhost:5050
+  ```
 
 ## Feature
 * Remove unused package
-* Install and sign Tailscale
-* Install docker
+* Tailscale
+* Docker
+* Portainer
