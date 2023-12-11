@@ -18,5 +18,5 @@
 ## Feature
 * Remove unused package
 * Tailscale
-* Docker
+* Docker (to active `docker` without `sudo` you must relog first)
 * Portainer

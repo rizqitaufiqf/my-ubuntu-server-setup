@@ -1,22 +1,22 @@
-printf "\n update ubuntu"
+# update ubuntu
 sudo apt update
 sudo apt upgrade -y
 
-prinf "\n update timezone"
+# update timezone
 sudo timedatectl set-timezone Asia/Jakarta
 
 sudo apt install unzip -y
 
-prinf "\n install tailscale"
+# install tailscale
 sudo curl -fsSL https://tailscale.com/install.sh | sh
 
-printf "\n remove unused package ubuntu"
+# remove unused package ubuntu
 sudo chmod +x ubuntu-cleaner.sh
 sudo chmod +x clean.sh
 sudo sh ubuntu-cleaner.sh
 sudo sh clean.sh
 
-prinft "\n install docker"
+# install docker
 sudo apt-get install ca-certificates curl gnupg
 sudo install -m 0755 -d /etc/apt/keyrings
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
@@ -33,7 +33,7 @@ sudo usermod -aG docker $USER
 
 sudo docker network create backend
 
-prinft "\n setup portainer"
+# setup portainer
 cd docker/portainer
 sudo docker compose up -d
 cd ..
