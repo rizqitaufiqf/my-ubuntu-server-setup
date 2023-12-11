@@ -5,8 +5,6 @@ sudo apt upgrade -y
 # update timezone
 sudo timedatectl set-timezone Asia/Jakarta
 
-sudo apt install unzip -y
-
 # install tailscale
 sudo curl -fsSL https://tailscale.com/install.sh | sh
 
@@ -28,12 +26,10 @@ echo \
   "$(. /etc/os-release && echo "$VERSION_CODENAME")" stable" | \
   sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 sudo apt-get update
-sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y
+sudo apt-get install unzip docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y
 sudo usermod -aG docker $USER
 
 sudo docker network create backend
 
 # setup portainer
-cd docker/portainer
-sudo docker compose up -d
-cd ..
+sudo docker compose -f "docker-compose/portainer/docker-compose.yml" up -d
