@@ -11,8 +11,12 @@
   sudo tailscale up
   ```
 * Portainer host
-  ```bash
+  ```http request
   http://localhost:5050
+  ```
+* Grafana host
+  ```http request
+    http://localhost:9000
   ```
 
 ## Feature
@@ -20,3 +24,6 @@
 * Tailscale
 * Docker (to active `docker` without `sudo` you must relog first)
 * Portainer
+* Prometheus
+* Node Exporter
+* Grafana
