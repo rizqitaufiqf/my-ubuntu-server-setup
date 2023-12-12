@@ -11,11 +11,11 @@
   sudo tailscale up
   ```
 * Portainer host
-  ```http request
+  ```bash
   http://localhost:5050
   ```
 * Grafana host
-  ```http request
+  ```bash
     http://localhost:9000
   ```
 
