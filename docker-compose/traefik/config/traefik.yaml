@@ -1,0 +1,43 @@
+global:
+  checkNewVersion: true
+  sendAnonymousUsage: false
+
+api:
+  dashboard: true
+  debug: true
+
+log:
+  level: INFO
+  # filepath: /var/log/traefik.log
+  # accesslog: true
+  # accesslog.filepath: /var/log/traefik-access.log
+
+providers:
+  docker:
+    network: backend
+    exposedByDefault: false
+  file:
+    directory: /etc/traefik
+    watch: true
+
+entryPoints:
+  web:
+    address: :80
+    http:
+      redirections:
+        entrypoint:
+          to: websecure
+          scheme: https
+  websecure:
+    address: :443
+    asDefault: true
+    http:
+      tls:
+        certresolver: myresolver
+
+certificatesResolvers:
+  myresolver:
+    acme:
+      # email: {email}
+      tlsChallenge: true
+      storage: /letsencrypt/acme.json

@@ -27,3 +27,4 @@
 * Prometheus
 * Node Exporter
 * Grafana
+* Traefik
