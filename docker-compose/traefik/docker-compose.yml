@@ -26,6 +26,30 @@ services:
       - traefik.http.middlewares.myauth.basicauth.users=${BASIC_AUTH}
     env_file:
       - ./.env
+  jaeger:
+    image: jaegertracing/all-in-one:latest
+    container_name: tr-jaeger
+    restart: unless-stopped
+    volumes:
+      - "./jaeger-ui.json:/etc/jaeger/jaeger-ui.json"
+    command: --query.ui-config /etc/jaeger/jaeger-ui.json
+    environment:
+      - METRICS_STORAGE_TYPE=prometheus
+      - PROMETHEUS_SERVER_URL=http://sm-prometheus:9090
+      - PROMETHEUS_QUERY_SUPPORT_SPANMETRICS_CONNECTOR=${PROMETHEUS_QUERY_SUPPORT_SPANMETRICS_CONNECTOR:-true}
+      - PROMETHEUS_QUERY_NAMESPACE=${PROMETHEUS_QUERY_NAMESPACE:-}
+      - PROMETHEUS_QUERY_DURATION_UNIT=${PROMETHEUS_QUERY_DURATION_UNIT:-}
+      - PROMETHEUS_QUERY_NORMALIZE_CALLS=true
+      - PROMETHEUS_QUERY_NORMALIZE_DURATION=true
+    ports:
+      # jaeger agent
+      - "6831:6831/udp"
+      # sampling
+      - "5778:5778"
+      # jaeger ui
+      - "16686:16686"
+    networks:
+      - backend
 
   # whoami:
   #   image: traefik/whoami:v1.8
