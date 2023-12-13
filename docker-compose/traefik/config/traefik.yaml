@@ -12,6 +12,14 @@ log:
   # accesslog: true
   # accesslog.filepath: /var/log/traefik-access.log
 
+metrics:
+  prometheus:
+    buckets:
+      - 0.1
+      - 0.3
+      - 1.2
+      - 5.0
+
 providers:
   docker:
     network: backend
