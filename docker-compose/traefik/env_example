@@ -1,3 +1,5 @@
+# rename env_example to .env
+
 EMAIL=user@example.com
 HOST=example.com
 
