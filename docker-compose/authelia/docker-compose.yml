@@ -14,7 +14,7 @@ services:
       - "9091:9091"
     labels:
       - traefik.enable=true
-      - traefik.http.routers.authelia.rule=HOST(`auth.${HOST}`) || Host(`www.traefik.${HOST}`)
+      - traefik.http.routers.authelia.rule=HOST(`auth.${HOST}`)
       - traefik.http.middlewares.authelia.forwardAuth.address=http://authelia:9091/api/verify?rd=https://auth.${HOST}/
       - traefik.http.middlewares.authelia.forwardAuth.trustForwardHeader=true
       - traefik.http.middlewares.authelia.forwardAuth.authResponseHeaders=Remote-User,Remote-Groups,Remote-Name,Remote-Email

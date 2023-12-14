@@ -33,7 +33,7 @@ services:
     # enable this to use traefik
     labels:
       - traefik.enable=true
-      - traefik.http.routers.grafana.rule=Host(`grafana.${HOST}`) || Host(`www.grafana.${HOST}`)
+      - traefik.http.routers.grafana.rule=Host(`grafana.${HOST}`)
       - traefik.http.services.grafana.loadbalancer.server.port=3000
       - traefik.http.routers.grafana.middlewares=authelia@docker
 

@@ -20,7 +20,7 @@ services:
       # - /var/log:/var/log
     labels:
       - traefik.enable=true
-      - traefik.http.routers.mydashboard.rule=Host(`traefik.${HOST}`)|| Host(`www.traefik.${HOST}`)
+      - traefik.http.routers.mydashboard.rule=Host(`traefik.${HOST}`)
       - traefik.http.routers.mydashboard.service=api@internal
       - traefik.http.routers.mydashboard.middlewares=myauth
       - traefik.http.middlewares.myauth.basicauth.users=${BASIC_AUTH}
@@ -60,7 +60,7 @@ services:
   #     - backend
   #   labels:
   #     - traefik.enable=true
-  #     - traefik.http.routers.mywhoami.rule=Host(`whoami.${HOST}`) || Host(`www.whoami.${HOST}`)
+  #     - traefik.http.routers.mywhoami.rule=Host(`whoami.${HOST}`)
   #     - traefik.http.services.mywhoami.loadbalancer.server.port=80
   #     - traefik.http.middlewares.mywwwredirect.redirectregex.regex=^https://www\.(.*)
   #     - traefik.http.middlewares.mywwwredirect.redirectregex.replacement=https://$${1}

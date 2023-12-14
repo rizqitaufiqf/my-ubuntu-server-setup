@@ -13,7 +13,7 @@ services:
     restart: unless-stopped
     labels:
       - traefik.enable=true
-      - traefik.http.routers.portainer.rule=Host(`portainer.${HOST}`) || Host(`www.portainer.${HOST}`)
+      - traefik.http.routers.portainer.rule=Host(`portainer.${HOST}`)
       - traefik.http.services.portainer.loadbalancer.server.port=9000
       - traefik.http.routers.portainer.middlewares=authelia@docker
     networks:
