@@ -1,4 +1,4 @@
-version: '3'
+version: '3.9'
 
 services:
   prometheus:
@@ -14,8 +14,10 @@ services:
     volumes:
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
       - /etc/timezone:/etc/timezone:ro
+      - prometheus-data:/prometheus
     networks:
       - backend
+
   grafana:
     image: grafana/grafana:latest
     container_name: sm-grafana
@@ -33,6 +35,7 @@ services:
     #   - traefik.enable=true
     #   - traefik.http.routers.grafana.rule=Host(`grafana.${HOST}`) || Host(`www.grafana.${HOST}`)
     #   - traefik.http.services.grafana.loadbalancer.server.port=3000
+
   node-exporter:
     image: prom/node-exporter:latest
     container_name: sm-node-exporter
@@ -41,6 +44,9 @@ services:
     #   - "9100:9100"
     networks:
       - backend
+
+volumes:
+  prometheus-data:
 
 networks:
   backend:
