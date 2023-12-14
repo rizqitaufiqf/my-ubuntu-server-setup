@@ -1,0 +1,44 @@
+version: '3.9'
+
+services:
+  postgresql:
+    image: postgres:latest
+    container_name: db-postgresql
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - data:/var/lib/postgresql/data
+    networks:
+      - backend
+    env_file:
+      - ./.env
+
+  pgadmin:
+    user: root
+    image: dpage/pgadmin4
+    restart: unless-stopped
+    container_name: db-pgadmin
+    ports:
+      - "8888:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
+    volumes:
+      - data:/var/lib/pgadmin
+    depends_on:
+      - postgresql
+    networks:
+      - backend
+    env_file:
+      - ./.env
+
+volumes:
+  data:
+
+networks:
+  backend:
+    external: true

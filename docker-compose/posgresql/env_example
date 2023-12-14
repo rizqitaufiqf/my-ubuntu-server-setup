@@ -1,0 +1,10 @@
+# rename env_example to .env
+
+# PostgreSQL Config
+POSTGRES_DB=database
+POSTGRES_USER=user
+POSTGRES_PASSWORD=password
+
+# pgAdmin Config
+PGADMIN_DEFAULT_EMAIL=user@example.com
+PGADMIN_DEFAULT_PASSWORD=password
