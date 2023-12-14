@@ -11,6 +11,11 @@ services:
       - data:/data
       - /var/run/docker.sock:/var/run/docker.sock:ro
     restart: unless-stopped
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.portainer.rule=Host(`portainer.${HOST}`) || Host(`www.portainer.${HOST}`)
+      - traefik.http.services.portainer.loadbalancer.server.port=9000
+      - traefik.http.routers.portainer.middlewares=authelia@docker
     networks:
       - backend
 
