@@ -1,0 +1,29 @@
+version: '3.9'
+
+services:
+  authelia:
+    image: authelia/authelia:latest
+    container_name: authelia
+    restart: unless-stopped
+    volumes:
+      - ./config:/config
+      - /etc/timezone:/etc/timezone:ro
+    networks:
+      - backend
+    ports:
+      - "9091:9091"
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.authelia.rule=HOST(`auth.${HOST}`) || Host(`www.traefik.${HOST}`)
+      - traefik.http.middlewares.authelia.forwardAuth.address=http://authelia:9091/api/verify?rd=https://auth.${HOST}/
+      - traefik.http.middlewares.authelia.forwardAuth.trustForwardHeader=true
+      - traefik.http.middlewares.authelia.forwardAuth.authResponseHeaders=Remote-User,Remote-Groups,Remote-Name,Remote-Email
+      - traefik.http.middlewares.authelia-basic.forwardAuth.address=http://authelia:9091/api/verify?auth=basic
+      - traefik.http.middlewares.authelia-basic.forwardAuth.trustForwardHeader=true
+      - traefik.http.middlewares.authelia-basic.forwardAuth.authResponseHeaders=Remote-User,Remote-Groups,Remote-Name,Remote-Email
+    env_file:
+      - ./.env
+
+networks:
+  backend:
+    external: true

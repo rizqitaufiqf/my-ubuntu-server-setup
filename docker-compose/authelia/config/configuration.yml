@@ -1,0 +1,92 @@
+###############################################################
+#                   Authelia configuration                    #
+###############################################################
+
+server:
+  host: 0.0.0.0
+  port: 9091
+log:
+  level: debug
+# I used this site to generate the secret: https://www.grc.com/passwords.html
+jwt_secret: JWT_SECRET
+default_redirection_url: https://auth.example.com
+totp:
+  issuer: authelia.com
+
+
+# customize passwords based on https://docs.authelia.com/configuration/authentication/file.html
+authentication_backend:
+  # disable_reset_password: false
+  file:
+    path: /config/users_database.yml
+    password:
+      algorithm: argon2id
+      iterations: 1
+      salt_length: 16
+      parallelism: 8
+      memory: 1024
+
+# Enable the following for Duo Push Notification support
+# Duo Free-Free up to 10 users
+# duo_api:
+#     hostname: GENERATE IN DUO APP
+#     integration_key: GENERATE IN DUO APP
+#     secret_key: GENERATE IN DUO APP
+
+# https://docs.authelia.com/configuration/access-control.html
+access_control:
+  default_policy: deny
+  rules:
+    # wildcard domain allowed to use double authentication for all services used byiteria
+    - domain: "*.example.com"
+      policy: two_factor # one_factor (user/password), two_password (user/password, totp)
+    # wildcard to bypass auth in local server
+    - domain: "*.example.com"
+      policy: bypass
+      networks:
+        - 192.168.1.0/24
+
+session:
+  name: authelia_session
+  # Used a different secret, but the same site as jwt_secret above.
+  # session cookies to authenticate users
+  secret: SECRET
+  expiration: 3600 # 1 hour
+  inactivity: 300 # 5 minutes
+  domain: example.com # Should match whatever your root protected domain is
+
+  redis:
+    host: REDIS_HOST
+    port: 6379
+    password: REDIS_PASSWORD
+
+regulation:
+  max_retries: 3
+  find_time: 120
+  ban_time: 300
+
+storage:
+  # supports more than one database
+  # in this case a local **file** is used as the "user" store and the other records go to **mysql**
+  encryption_key: ENCRYPTION_KEY
+  # local:
+  #   path: /config/db.sqlite3
+  postgres:
+    host: POSTGRES_HOST
+    port: 5432
+    database: POSTGRES_DB
+    schema: public
+    username: POSTGRES_USERNAME
+    password: POSTGRES_PASSWORD
+
+notifier:
+  # Note Authelia tory only supports 1 notification method
+  # smtp:
+  #   username: username
+  #   password: password
+  #   sender: sender@mail.com
+  #   host: smtp.gmail.com
+  #   port: 587
+
+  filesystem:
+    filename: /config/notification.txt
