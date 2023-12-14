@@ -1,0 +1,8 @@
+EMAIL=user@example.com
+HOST=example.com
+
+# generate user and password
+# echo $(htpasswd -nbB USER "PASS") | sed -e s/\\$/\\$\\$/g
+# change USER and PASS
+# If htpasswd not found try to install "sudo apt install apache2-utils"
+BASIC_AUTH=USER:$$2y$$05$$g1tZuAN9kKAQWZ9TqhXxXufbprnPNm8hqR.MUq0ab3ZYQZJToj39S
