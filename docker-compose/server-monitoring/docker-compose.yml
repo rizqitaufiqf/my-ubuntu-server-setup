@@ -65,6 +65,22 @@ services:
 #    networks:
 #      - backend
 
+#  heimdall:
+#    image: ghcr.io/linuxserver/heimdall:latest
+#    container_name: sm-heimdall
+#    restart: unless-stopped
+#    networks:
+#      - backend
+#    environment:
+#      - LOG_LEVEL=debug
+#    labels:
+#      - traefik.enable=true
+#      - traefik.http.routers.heimdall.rule=Host(`heimdall.${HOST}`)
+#      - traefik.http.routers.heimdall.middlewares=authelia@docker
+#      - traefik.http.services.heimdall.loadbalancer.server.port=80
+#    volumes:
+#      - ./heimdall/config:/config
+
 volumes:
   prometheus-data:
 
