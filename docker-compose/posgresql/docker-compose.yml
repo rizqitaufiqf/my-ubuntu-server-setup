@@ -19,7 +19,7 @@ services:
 
   pgadmin:
     user: root
-    image: dpage/pgadmin4
+    image: dpage/pgadmin4:latest
     restart: unless-stopped
     container_name: db-pgadmin
     ports:

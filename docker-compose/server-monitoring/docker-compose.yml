@@ -46,6 +46,25 @@ services:
     networks:
       - backend
 
+  # this cronjob is for truncate database in postgresql every 4 hours
+#  cron:
+#    build:
+#      context: cron
+#      dockerfile: Dockerfile
+#    container_name: sm-cron
+#    restart: unless-stopped
+#    environment:
+#      - DATABASE_TYPE=${DATABASE_TYPE}
+#      - DATABASE_HOST=${DATABASE_HOST}
+#      - DATABASE_PORT=${DATABASE_PORT}
+#      - DATABASE_NAME=${DATABASE_NAME}
+#      - DATABASE_USERNAME=${DATABASE_USERNAME}
+#      - DATABASE_PASSWORD=${DATABASE_PASSWORD}
+#    env_file:
+#      - .env
+#    networks:
+#      - backend
+
 volumes:
   prometheus-data:
 

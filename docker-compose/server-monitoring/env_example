@@ -1,3 +1,12 @@
 # rename env_example to .env
 
+# Grafana Config
 HOST=example.com
+
+# Cronjob Config
+DATABASE_TYPE=postgres
+DATABASE_HOST=host
+DATABASE_PORT=5432
+DATABASE_NAME=db
+DATABASE_USERNAME=user
+DATABASE_PASSWORD=password
