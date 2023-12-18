@@ -5,9 +5,12 @@ services:
     image: authelia/authelia:latest
     container_name: authelia
     restart: unless-stopped
+    environment:
+      - TZ=Asia/Jakarta
     volumes:
       - ./config:/config
       - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
     networks:
       - backend
     ports:

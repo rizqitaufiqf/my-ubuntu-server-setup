@@ -11,9 +11,12 @@ services:
       # - --storage.tsdb.retention.size=10GB
     # ports:
     #  - "9090:9090"
+    environment:
+      - TZ=Asia/Jakarta
     volumes:
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
       - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
       - prometheus-data:/prometheus
     networks:
       - backend
@@ -24,10 +27,13 @@ services:
     restart: unless-stopped
     ports:
       - "9000:3000"
+    environment:
+      - TZ=Asia/Jakarta
     volumes:
       - ./grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards
       - ./grafana/provisioning/datasources:/etc/grafana/provisioning/datasources
       - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
     networks:
       - backend
     # enable this to use traefik

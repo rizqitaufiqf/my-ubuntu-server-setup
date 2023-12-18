@@ -6,7 +6,10 @@ services:
     container_name: portainer
     ports:
       - "5050:9000"
+    environment:
+      - TZ=Asia/Jakarta
     volumes:
+      - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
       - data:/data
       - /var/run/docker.sock:/var/run/docker.sock:ro
