@@ -1,0 +1,3 @@
+# rename env_example to .env
+
+REDIS_HOST_PASSWORD=password
