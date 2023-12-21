@@ -36,6 +36,24 @@ providers:
     directory: /etc/traefik
     watch: true
 
+http:
+  middlewares:
+    ratelimit-be:
+      rateLimit:
+        average: 20
+        period: 2m
+        burst: 5
+    ratelimit-docs:
+      rateLimit:
+        average: 30
+        period: 1m
+        burst: 20
+    ratelimit-fe:
+      rateLimit:
+        average: 30
+        period: 1m
+        burst: 20
+
 entryPoints:
   web:
     address: :80
