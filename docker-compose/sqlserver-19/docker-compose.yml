@@ -1,0 +1,53 @@
+version: '3.9'
+  
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    container_name: db-sqlserver-19
+    restart: unless-stopped
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=${Sa_Password}
+      - MSSQL_PID=Developer
+    ports:
+     - "1433:1433"
+    volumes:
+      - data:/var/opt/mssql
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P ${Sa_Password} -Q 'SELECT 1' || exit 1"]
+      interval: 10s
+      retries: 10
+      start_period: 10s
+      timeout: 3s
+    networks:
+      - backend
+    # enable this to use traefik
+#    labels:
+#      - traefik.enable=true
+#      - traefik.http.routers.mssql.rule=Host(`mssql.${HOST}`)
+#      - traefik.http.services.mssql.loadbalancer.server.port=1433
+#      - traefik.http.routers.mssql.entrypoints=sqlserver
+    env_file:
+      - ./.env
+  sqlserver.configurator:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    container_name: db-sqlserver-19-configurator
+    volumes:
+      - ./init:/docker-entrypoint-initdb.d
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+    command: >
+      bash -c '
+      /opt/mssql-tools/bin/sqlcmd -S sqlserver -U sa -P ${Sa_Password} -d master -i docker-entrypoint-initdb.d/init.sql;
+      echo "All done!";
+      '
+    networks:
+      - backend
+
+volumes:
+  data:
+
+networks:
+  backend:
+    external: true
