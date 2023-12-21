@@ -20,13 +20,13 @@ metrics:
       - 1.2
       - 5.0
 
-#tracing:
-#  jaeger:
-#    localAgentHostPort: tr-jaeger:6831
-#    samplingparam: 1.0
-#    samplingServerURL: http://tr-jaeger:5778/sampling
-#    samplingtype: const
-#    propagation: jaeger
+# tracing:
+#   jaeger:
+#     localAgentHostPort: tr-jaeger:6831
+#     samplingparam: 1.0
+#     samplingServerURL: http://tr-jaeger:5778/sampling
+#     samplingtype: const
+#     propagation: jaeger
 
 providers:
   docker:
@@ -47,6 +47,12 @@ entryPoints:
   websecure:
     address: :443
     asDefault: true
+    http:
+      tls:
+        certresolver: myresolver
+
+  sqlserver:
+    address: :1433
     http:
       tls:
         certresolver: myresolver
