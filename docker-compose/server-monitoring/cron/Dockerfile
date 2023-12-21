@@ -8,7 +8,7 @@ COPY reset-db.sh /root/reset-db.sh
 RUN chmod +x /root/reset-db.sh
 
 #Install Cron
-RUN apk add postgresql-client
+RUN apk add postgresql-client curl sudo tzdata
 
 # Add the cron job for truncate db every 4 hours
 RUN crontab -l | { cat; echo "0 */4 * * * sh /root/reset-db.sh > /root/reset-db.log"; } | crontab -

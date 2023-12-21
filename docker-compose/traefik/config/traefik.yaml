@@ -68,7 +68,6 @@ entryPoints:
     http:
       tls:
         certresolver: myresolver
-
   sqlserver:
     address: :1433
     http:

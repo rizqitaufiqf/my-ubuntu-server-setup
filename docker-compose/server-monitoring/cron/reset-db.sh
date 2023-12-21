@@ -1,7 +1,9 @@
 #!/bin/sh
 
-now="$(date +"%r")"
-echo "reset db -- $now"
+export TZ="Asia/Jakarta"
+current_date=$(date +"%d-%m-%Y %H:%M:%S %Z")
+echo "reset db -- $current_date"
+
 
 # Execute SQL command to truncate the task table
 # psql ${DATABASE_TYPE}://${DATABASE_USERNAME}:${DATABASE_PASSWORD}@${DATABASE_HOST}:${DATABASE_PORT}/${DATABASE_NAME} -c "TRUNCATE TABLE public.user cascade;"
