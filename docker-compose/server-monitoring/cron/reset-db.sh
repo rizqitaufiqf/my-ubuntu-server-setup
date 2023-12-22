@@ -11,7 +11,9 @@ echo "reset db -- $current_date"
 # Anonymous code block
 ANONYMOUS_CODE_BLOCK=$(cat <<EOF
 DO \$\$
-DECLARE row RECORD;
+DECLARE
+  row RECORD;
+  table_names VARCHAR;
 BEGIN
   FOR row IN SELECT table_name
     FROM information_schema.tables
@@ -19,7 +21,9 @@ BEGIN
     AND table_schema='public'
     AND table_name NOT IN ('migrations')
   LOOP
-    EXECUTE format('TRUNCATE TABLE %I CASCADE;',row.table_name);
+    table_names := row.table_name;
+    EXECUTE format('TRUNCATE TABLE %I CASCADE;', table_names);
+    RAISE NOTICE 'Table "%" truncated', table_names;
   END LOOP;
 END;
 \$\$;
