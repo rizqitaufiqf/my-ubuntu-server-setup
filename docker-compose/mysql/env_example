@@ -1,0 +1,4 @@
+# rename env_example to .env
+
+HOST=example.com
+MYSQL_ROOT_PASSWORD=password
