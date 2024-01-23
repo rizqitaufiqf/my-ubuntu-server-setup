@@ -5,11 +5,16 @@ services:
     image: redis:latest
     container_name: db-redis
     restart: unless-stopped
-    ports:
-      - "6379:6379"
+    # ports:
+    #   - "6379:6379"
     volumes:
       - data:/data
     command: '--requirepass ${REDIS_HOST_PASSWORD}'
+    labels:
+      - traefik.enable=true
+      - traefik.tcp.routers.redis.rule=HostSNI("*")
+      - traefik.tcp.routers.redis.entrypoints=redis
+      - traefik.tcp.services.redis.loadbalancer.server.port=6379
     networks:
       - backend
     env_file:
@@ -19,10 +24,16 @@ services:
     image: redis:latest
     container_name: db-redis-nopass
     restart: unless-stopped
-    ports:
-      - "6389:6379"
+    # ports:
+    #   - "6380:6380"
     volumes:
       - data-nopass:/data
+    command: '--port 6380'
+    labels:
+      - traefik.enable=true
+      - traefik.tcp.routers.redisnopass.rule=HostSNI("*")
+      - traefik.tcp.routers.redisnopass.entrypoints=redisnopass
+      - traefik.tcp.services.redisnopass.loadbalancer.server.port=6380
     networks:
       - backend
 
@@ -30,8 +41,16 @@ services:
     image: redislabs/redisinsight
     restart: unless-stopped
     container_name: db-redisinsight
-    ports:
-      - "8889:8001"
+    environment:
+      RIPORT: 8889
+      RITRUSTEDORIGINS: https://redisinsight.reredesu.my.id
+    # ports:
+    #   - "8889:8889"
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.redisinsight.rule=Host(`redisinsight.${HOST}`)
+      - traefik.http.services.redisinsight.loadbalancer.server.port=8889
+      - traefik.http.routers.redisinsight.middlewares=authelia@docker
     depends_on:
       - redis
     networks:
