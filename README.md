@@ -28,3 +28,7 @@
 * Node Exporter
 * Grafana
 * Traefik
+* authelia
+
+## Note
+* to set up Traefik, setup authelia first, or disable authelia in traefik middleware docker-compose.yaml, then you can run every docker compose
