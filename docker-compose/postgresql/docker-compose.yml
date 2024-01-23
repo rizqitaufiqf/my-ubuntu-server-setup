@@ -5,13 +5,18 @@ services:
     image: postgres:latest
     container_name: db-postgresql
     restart: unless-stopped
-    ports:
-      - "5432:5432"
+    # ports:
+    #   - "5432:5432"
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     volumes:
       - data:/var/lib/postgresql/data
+    labels:
+      - traefik.enable=true
+      - traefik.tcp.routers.postgresql.rule=HostSNI("*")
+      - traefik.tcp.routers.postgresql.entrypoints=postgresql
+      - traefik.tcp.services.postgresql.loadbalancer.server.port=5432
     networks:
       - backend
     env_file:
@@ -22,13 +27,19 @@ services:
     image: dpage/pgadmin4:latest
     restart: unless-stopped
     container_name: db-pgadmin
-    ports:
-      - "8888:80"
+    # ports:
+    #   - "8888:80"
     environment:
       PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
       PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
+      PGADMIN_LISTEN_PORT: 8888
     volumes:
       - data:/var/lib/pgadmin
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.pgadmin.rule=Host(`pgadmin.${HOST}`)
+      - traefik.http.services.pgadmin.loadbalancer.server.port=8888
+      - traefik.http.routers.pgadmin.middlewares=authelia@docker
     depends_on:
       - postgresql
     networks:

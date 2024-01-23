@@ -68,11 +68,12 @@ entryPoints:
     http:
       tls:
         certresolver: myresolver
+  mysql:
+    address: :3306
   sqlserver:
     address: :1433
-    http:
-      tls:
-        certresolver: myresolver
+  postgresql:
+    address: :5432
 
 certificatesResolvers:
   myresolver:
