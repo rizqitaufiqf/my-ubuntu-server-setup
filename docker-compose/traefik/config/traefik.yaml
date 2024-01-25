@@ -78,6 +78,8 @@ entryPoints:
     address: :6379
   redisnopass:
     address: :6380
+  rabbitmq:
+    address: :5672
 
 certificatesResolvers:
   myresolver:

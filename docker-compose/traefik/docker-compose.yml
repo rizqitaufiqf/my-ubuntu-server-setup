@@ -12,6 +12,7 @@ services:
       - "3306:3306"
       - "6379:6379"
       - "6380:6380"
+      - "5672:5672"
     networks:
       - backend
     environment:

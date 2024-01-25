@@ -1,0 +1,7 @@
+# rename env_example to .env
+
+HOST=example.com
+
+RABBITMQ_DEFAULT_USER=guest
+RABBITMQ_DEFAULT_PASS=guest
+RABBITMQ_NODE_PORT=5672

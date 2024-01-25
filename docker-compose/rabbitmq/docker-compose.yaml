@@ -1,0 +1,32 @@
+version: "3.9"
+services:
+  rabbitmq:
+    image: rabbitmq:3.12-management-alpine
+    container_name: db-rabbitmq
+    environment:
+      - TZ=Asia/Jakarta
+      - RABBITMQ_DEFAULT_USER=${RABBITMQ_DEFAULT_USER}
+      - RABBITMQ_DEFAULT_PASS=${RABBITMQ_DEFAULT_PASS}
+      - RABBITMQ_NODE_PORT=${RABBITMQ_NODE_PORT}
+    # ports:
+    #   - 5672:5672
+    #   - 15672:15672
+    # volumes:
+    #   - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
+    #   - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
+    labels:
+      - traefik.enable=true
+    # RabbitMQ
+      - traefik.tcp.routers.rabbitmq.rule=HostSNI("*")
+      - traefik.tcp.routers.rabbitmq.entrypoints=rabbitmq
+      - traefik.tcp.services.rabbitmq.loadbalancer.server.port=5672
+    # RabbitMQ Management
+      - traefik.http.routers.rabbitmq-ui.rule=Host(`rabbitmq.${HOST}`)
+      - traefik.http.services.rabbitmq-ui.loadbalancer.server.port=15672
+      - traefik.http.routers.rabbitmq-ui.middlewares=authelia@docker
+    networks:
+      - backend
+
+networks:
+  backend:
+    external: true
