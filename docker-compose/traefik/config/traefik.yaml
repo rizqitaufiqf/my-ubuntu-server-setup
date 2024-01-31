@@ -50,9 +50,9 @@ http:
         burst: 20
     ratelimit-fe:
       rateLimit:
-        average: 30
+        average: 60
         period: 1m
-        burst: 20
+        burst: 30
 
 entryPoints:
   web:
