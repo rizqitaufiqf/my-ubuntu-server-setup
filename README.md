@@ -28,8 +28,9 @@
 * Node Exporter
 * Grafana
 * Traefik
+  * Traefik Geo Block
+  * Traefik Log Rotate
 * authelia
-* Traefik Geo Block
 
 ## Note
 * to set up Traefik, setup authelia first, or disable authelia in traefik middleware docker-compose.yaml, then you can run every docker compose
