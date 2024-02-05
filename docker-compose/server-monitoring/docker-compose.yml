@@ -42,8 +42,7 @@ services:
       - traefik.enable=true
       - traefik.http.routers.grafana.rule=Host(`grafana.${HOST}`)
       - traefik.http.services.grafana.loadbalancer.server.port=9111
-      - traefik.http.routers.grafana.middlewares=authelia@docker
-      # - traefik.http.routers.grafana.middlewares=mygeoblock@file
+      - traefik.http.routers.grafana.middlewares=authelia@docker,mygeoblock@file
 
   node-exporter:
     image: prom/node-exporter:latest
@@ -84,7 +83,7 @@ services:
 #    labels:
 #      - traefik.enable=true
 #      - traefik.http.routers.heimdall.rule=Host(`heimdall.${HOST}`)
-#      - traefik.http.routers.heimdall.middlewares=authelia@docker
+#      - traefik.http.routers.heimdall.middlewares=authelia@docker,mygeoblock@file
 #      - traefik.http.services.heimdall.loadbalancer.server.port=80
 #    volumes:
 #      - ./heimdall/config:/config

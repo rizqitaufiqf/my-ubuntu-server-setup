@@ -23,8 +23,7 @@ services:
     # RabbitMQ Management
       - traefik.http.routers.rabbitmq-ui.rule=Host(`rabbitmq.${HOST}`)
       - traefik.http.services.rabbitmq-ui.loadbalancer.server.port=15672
-      - traefik.http.routers.rabbitmq-ui.middlewares=authelia@docker
-      # - traefik.http.routers.rabbitmq-ui.middlewares=mygeoblock@file
+      - traefik.http.routers.rabbitmq-ui.middlewares=authelia@docker,mygeoblock@file
     networks:
       - backend
 

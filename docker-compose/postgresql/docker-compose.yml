@@ -39,8 +39,7 @@ services:
       - traefik.enable=true
       - traefik.http.routers.pgadmin.rule=Host(`pgadmin.${HOST}`)
       - traefik.http.services.pgadmin.loadbalancer.server.port=8888
-      - traefik.http.routers.pgadmin.middlewares=authelia@docker
-      # - traefik.http.routers.pgadmin.middlewares=mygeoblock@file
+      - traefik.http.routers.pgadmin.middlewares=authelia@docker,mygeoblock@file
     depends_on:
       - postgresql
     networks:

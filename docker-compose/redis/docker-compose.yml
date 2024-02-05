@@ -50,8 +50,7 @@ services:
       - traefik.enable=true
       - traefik.http.routers.redisinsight.rule=Host(`redisinsight.${HOST}`)
       - traefik.http.services.redisinsight.loadbalancer.server.port=8889
-      - traefik.http.routers.redisinsight.middlewares=authelia@docker
-      # - traefik.http.routers.redisinsight.middlewares=mygeoblock@file
+      - traefik.http.routers.redisinsight.middlewares=authelia@docker,mygeoblock@file
     depends_on:
       - redis
     networks:

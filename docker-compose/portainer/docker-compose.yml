@@ -18,8 +18,7 @@ services:
       - traefik.enable=true
       - traefik.http.routers.portainer.rule=Host(`portainer.${HOST}`)
       - traefik.http.services.portainer.loadbalancer.server.port=9000
-      - traefik.http.routers.portainer.middlewares=authelia@docker
-      # - traefik.http.routers.portainer.middlewares=mygeoblock@file
+      - traefik.http.routers.portainer.middlewares=authelia@docker,mygeoblock@file
     networks:
       - backend
 
