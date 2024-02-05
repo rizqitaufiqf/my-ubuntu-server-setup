@@ -26,9 +26,10 @@ services:
     container_name: sm-grafana
     restart: unless-stopped
     ports:
-      - "9000:3000"
+      - "9000:9111"
     environment:
       - TZ=Asia/Jakarta
+      - "GF_SERVER_HTTP_PORT=9111"
     volumes:
       - ./grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards
       - ./grafana/provisioning/datasources:/etc/grafana/provisioning/datasources
@@ -40,7 +41,7 @@ services:
     labels:
       - traefik.enable=true
       - traefik.http.routers.grafana.rule=Host(`grafana.${HOST}`)
-      - traefik.http.services.grafana.loadbalancer.server.port=3000
+      - traefik.http.services.grafana.loadbalancer.server.port=9111
       - traefik.http.routers.grafana.middlewares=authelia@docker
 
   node-exporter:
