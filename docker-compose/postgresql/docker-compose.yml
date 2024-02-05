@@ -16,7 +16,6 @@ services:
       - traefik.enable=true
       - traefik.tcp.routers.postgresql.rule=HostSNI("*")
       - traefik.tcp.routers.postgresql.entrypoints=postgresql
-      # - traefik.tcp.routers.postgresql.middlewares=mygeoblock@file
       - traefik.tcp.services.postgresql.loadbalancer.server.port=5432
     networks:
       - backend
