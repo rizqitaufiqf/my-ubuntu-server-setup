@@ -26,6 +26,7 @@ services:
       - traefik.enable=true
       - traefik.tcp.routers.mssql19.rule=HostSNI("*")
       - traefik.tcp.routers.mssql19.entrypoints=sqlserver
+      # - traefik.tcp.routers.mssql19.middlewares=mygeoblock@file
       - traefik.tcp.services.mssql19.loadbalancer.server.port=1433
     env_file:
       - ./.env

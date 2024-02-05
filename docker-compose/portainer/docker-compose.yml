@@ -4,8 +4,8 @@ services:
   portainer:
     image: portainer/portainer-ce:latest
     container_name: portainer
-    ports:
-      - "5050:9000"
+    # ports:
+    #   - "5050:9000"
     environment:
       - TZ=Asia/Jakarta
     volumes:
@@ -19,6 +19,7 @@ services:
       - traefik.http.routers.portainer.rule=Host(`portainer.${HOST}`)
       - traefik.http.services.portainer.loadbalancer.server.port=9000
       - traefik.http.routers.portainer.middlewares=authelia@docker
+      # - traefik.http.routers.portainer.middlewares=mygeoblock@file
     networks:
       - backend
 

@@ -25,8 +25,8 @@ services:
     image: grafana/grafana:latest
     container_name: sm-grafana
     restart: unless-stopped
-    ports:
-      - "9000:9111"
+    # ports:
+    #   - "9000:9111"
     environment:
       - TZ=Asia/Jakarta
       - "GF_SERVER_HTTP_PORT=9111"
@@ -43,6 +43,7 @@ services:
       - traefik.http.routers.grafana.rule=Host(`grafana.${HOST}`)
       - traefik.http.services.grafana.loadbalancer.server.port=9111
       - traefik.http.routers.grafana.middlewares=authelia@docker
+      # - traefik.http.routers.grafana.middlewares=mygeoblock@file
 
   node-exporter:
     image: prom/node-exporter:latest
