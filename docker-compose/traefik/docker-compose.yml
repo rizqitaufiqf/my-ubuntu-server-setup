@@ -8,23 +8,25 @@ services:
     ports:
       - "80:80"
       - "443:443"
+      # for db ports
       - "1433:1433"
       - "5432:5432"
       - "3306:3306"
       - "6379:6379"
-      - "6380:6380"
+      # - "6380:6380"
       - "5672:5672"
     networks:
       - backend
     environment:
       - TRAEFIK_CERTIFICATESRESOLVERS_MYRESOLVER_ACME_EMAIL=${EMAIL}
+      - TZ=Asia/Jakarta
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - ./letsencrypt:/letsencrypt
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
       - ${PWD}/config:/etc/traefik
-      # - /var/log:/var/log
+      - ./logs:/var/log/traefik
     labels:
       - traefik.enable=true
       - traefik.http.routers.mydashboard.rule=Host(`traefik.${HOST}`)
@@ -32,6 +34,7 @@ services:
       - traefik.http.routers.mydashboard.middlewares=myauth
       - traefik.http.middlewares.myauth.basicauth.users=${BASIC_AUTH}
       - traefik.http.routers.mydashboard.middlewares=authelia@docker
+      # - traefik.http.routers.mydashboard.middlewares=mygeoblock@file
     env_file:
       - ./.env
 

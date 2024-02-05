@@ -1,0 +1,35 @@
+http:
+  middlewares:
+    ratelimit-be:
+      rateLimit:
+        average: 20
+        period: 2m
+        burst: 5
+    ratelimit-docs:
+      rateLimit:
+        average: 30
+        period: 1m
+        burst: 20
+    ratelimit-fe:
+      rateLimit:
+        average: 60
+        period: 1m
+        burst: 30
+    mygeoblock:
+      plugin:
+        geoblock:
+          silentStartUp: false
+          allowLocalRequests: true
+          logLocalRequests: false
+          logAllowedRequests: false
+          logApiRequests: true
+          api: "https://get.geojs.io/v1/ip/country/{ip}"
+          apiTimeoutMs: 750                                 # optional
+          cacheSize: 15
+          forceMonthlyUpdate: true
+          allowUnknownCountries: false
+          unknownCountryApiResponse: "nil"
+          blackListMode: false
+          addCountryHeader: false
+          countries:
+            - ID

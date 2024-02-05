@@ -36,24 +36,6 @@ providers:
     directory: /etc/traefik
     watch: true
 
-http:
-  middlewares:
-    ratelimit-be:
-      rateLimit:
-        average: 20
-        period: 2m
-        burst: 5
-    ratelimit-docs:
-      rateLimit:
-        average: 30
-        period: 1m
-        burst: 20
-    ratelimit-fe:
-      rateLimit:
-        average: 60
-        period: 1m
-        burst: 30
-
 entryPoints:
   web:
     address: :80
@@ -62,12 +44,16 @@ entryPoints:
         entrypoint:
           to: websecure
           scheme: https
+      # middlewares:
+      #   - mygeoblock@file
   websecure:
     address: :443
     asDefault: true
     http:
       tls:
         certresolver: myresolver
+      # middlewares:
+      #   - mygeoblock@file
   mysql:
     address: :3306
   sqlserver:
@@ -76,8 +62,8 @@ entryPoints:
     address: :5432
   redis:
     address: :6379
-  redisnopass:
-    address: :6380
+  # redisnopass:
+  #   address: :6380
   rabbitmq:
     address: :5672
 
@@ -87,3 +73,9 @@ certificatesResolvers:
       # email: {email}
       tlsChallenge: true
       storage: /letsencrypt/acme.json
+
+experimental:
+  plugins:
+    geoblock:
+      moduleName: "github.com/PascalMinder/geoblock"
+      version: "v0.2.7"
