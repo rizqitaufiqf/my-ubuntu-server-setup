@@ -50,6 +50,17 @@ services:
     restart: unless-stopped
     # ports:
     #   - "9100:9100"
+    volumes:
+      # Remember to use read-only bind mounts.
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    command:
+      - "--web.listen-address=:9100"
+      - "--path.procfs=/host/proc"
+      - "--path.sysfs=/host/sys"
+      - "--path.rootfs=/rootfs" # Necessary for collecting host filesystem metrics.
+      - "--collector.filesystem.ignored-mount-points='^/(sys|proc|dev|host|etc|rootfs/var/lib/docker/containers|rootfs/var/lib/docker/overlay2|rootfs/run/docker/netns|rootfs/var/lib/docker/aufs)($$|/)'"
     networks:
       - backend
 
